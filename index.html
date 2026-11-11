@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我們的第一個月</title>
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Klee One', cursive;
+            background-color: #F0F8FF;
+            color: #4A5568;
+            overflow-x: hidden;
+            line-height: 2.2; /* 拉大行距 */
+        }
+
+        .snowflakes {
+            position: fixed;
+            top: -10%;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .snowflake {
+            position: absolute;
+            color: #FFF;
+            font-size: 1.5em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .cover-section {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .typewriter h1 {
+            font-size: 2rem;
+            overflow: hidden;
+            border-right: .15em solid #87CEEB;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .1em;
+            animation: typing 2.5s steps(20, end), blink-caret .75s step-end infinite;
+            color: #2C3E50;
+        }
+
+        .subtitle {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            animation-delay: 2.5s;
+            color: #7F8C8D;
+        }
+
+        .snowman-divider {
+            text-align: center;
+            font-size: 1.8rem;
+            margin: 60px 0; /* 加大分隔線的上下空間 */
+            color: #A9CCE3;
+        }
+
+        .date-title {
+            text-align: center;
+            font-weight: 600;
+            color: #34495E;
+            margin-bottom: 45px;
+            background: #E8F6F3;
+            border-radius: 20px;
+            padding: 10px 25px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .center-wrap { text-align: center; }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+        .chat-bubble {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .chat-left {
+            background-color: #FEECA5;
+            align-self: flex-start;
+            border-top-left-radius: 4px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+            color: #333;
+        }
+
+        .sticker {
+            width: 150px;
+            height: auto;
+            align-self: flex-start;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 圖片共用樣式 */
+        .story-photo {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: block; /* 確保圖片正確佔據空間 */
+        }
+
+        /* 極淡粉色虛線小劇場 */
+        .inner-thought {
+            font-size: 1.05rem;
+            color: #A05260;
+            background: #FFF7F8;
+            padding: 20px 25px;
+            border: 2px dashed #FADADD;
+            margin-bottom: 50px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(250,218,221,0.15);
+        }
+
+        .interactive-section {
+            background: #FFFFFF;
+            padding: 30px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 50px 0;
+        }
+        .interactive-title {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #34495E;
+        }
+        .btn {
+            background-color: #A9CCE3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: 'Klee One', cursive;
+            cursor: pointer;
+            margin: 8px;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #7FB3D5; }
+        .popup-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #FFF7F8;
+            color: #A05260;
+            border-radius: 12px;
+            border: 2px dashed #FADADD;
+            font-weight: 600;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            padding: 0 15px;
+        }
+       
+        .story-text strong {
+            color: #5D6D7E;
+            font-size: 1.15rem;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #87CEEB; } }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake" style="left: 10%; animation-duration: 8s; animation-delay: 1s;">❅</div>
+        <div class="snowflake" style="left: 30%; animation-duration: 10s; animation-delay: 2s;">❆</div>
+        <div class="snowflake" style="left: 50%; animation-duration: 7s; animation-delay: 0s;">❅</div>
+        <div class="snowflake" style="left: 70%; animation-duration: 12s; animation-delay: 3s;">❆</div>
+        <div class="snowflake" style="left: 90%; animation-duration: 9s; animation-delay: 1.5s;">❅</div>
+    </div>
+
+    <div class="container">
+        <!-- 開場引言 -->
+        <div class="cover-section">
+            <div class="typewriter">
+                <h1>欸欸跟你說喔.....</h1>
+            </div>
+            <div class="subtitle">我們在一起一個月了 🤎</div>
+        </div>
+
+        <div class="snowman-divider">☃️</div>
+
+        <!-- 一、8/31 故事的開始 -->
+        <div class="center-wrap"><div class="date-title">8月31日 · 故事的開始</div></div>
+        <div class="chat-container">
+            <div class="chat-bubble chat-left">哈囉你好 那個..你最近應該有被我朋友和他同事騷擾xd</div>
+            <div class="chat-bubble chat-left">你可能覺得突然又莫名其妙😂</div>
+            <div class="sticker">🐰 揮手 HI !!</div>
+        </div>
+
+        <div class="snowman-divider">☃️</div>
+
+        <!-- 二、第一次見面 = 第一次去滑雪 -->
+        <div class="center-wrap"><div class="date-title">9月 · 第一次見面 (滑雪)</div></div>
+        
+        <!-- 這是第一次滑雪的照片 -->
+        <img class="story-photo" src="on 2.jpeg" alt="第一次滑雪">
+       
+        <div class="inner-thought">
+            真的有人會第一次見面約滑雪嗎？感覺會很狼狽耶！<br>
+            而且太緊張了吧！會不會很尷尬...
+        </div>
+
+        <div class="story-text">
+            見面那天 我從早上就超級緊張<br>
+            看到穿白色襯衫的你 心跳已經快到不行了<br>
+            只能轉身深呼吸><
+        </div>
+
+        <div class="story-text">
+            第一次見面完褲子忘在你那邊<br>就跟你說有機會見面再拿給我<br>沒機會的話可以寄給我<br><br>
+            其實我只是不知道會不會有下一次<br>但我是想見面的！<br>
+            因為第一次見面很開心<br>
+            意外發現你也喜歡火影 我們都喜歡 MOMO燒<br>
+        </div>
+       
+        <div class="inner-thought">
+            而且...你真的很帥
+        </div>
+
+        <div class="interactive-section">
+            <div class="interactive-title">可是!<br>你那時候沒回覆我鼓起勇氣說的: 我會想再見阿!! <br>現在給你機會上訴！</div>
+            <button class="btn" onclick="showMsg('msg-appeal', '很棒！標準答案 💯')">我也會想再見面</button>
+            <button class="btn" onclick="showMsg('msg-appeal', '很含蓄但給過 😏')">我也是</button>
+            <div id="msg-appeal" class="popup-msg"></div>
+        </div>
+
+        <div class="snowman-divider">☃️</div>
+
+        <!-- 三、第二次見面 -->
+        <div class="center-wrap"><div class="date-title">第二次見面的約會</div></div>
+       
+        <div class="story-text">
+            🐾 <strong>卡皮巴拉農場</strong><br>
+            我很怕被鴨鴨啄 你就拉著我的手過去餵<br>
+            那時候也有一點點覺得好幸福喔 好開心<br>但一樣很緊張
+        </div>
+
+        <img class="story-photo" src="ka.jpeg" alt="鴨">
+
+        <div class="story-text">
+            🎡 <strong>美麗華摩天輪</strong><br>
+            這是我第一次坐美麗華的摩天輪<br>
+            我有懼高症所以蠻緊張的 但又覺得好浪漫<br> 很喜歡但我根本不敢跟你對視><
+        </div>
+        
+        <!-- 這是摩天輪的照片 -->
+        <img class="story-photo" src="mo.jpeg" alt="摩天輪">
+       
+        <div class="inner-thought">
+            心裡小加分 因為你居然有先買票！我很驚訝✨
+        </div>
+
+        <div class="story-text">
+            👟 <strong>隔天運動與吃飯</strong><br>
+            隔天是各自運動完去吃飯<br>(其實我蠻喜歡這樣的)<br>
+            你看我的手有沒有破皮 還說我手怎麼這麼冰<br>
+            我已經緊張到不知道說什麼了 超級害羞<br>
+            但又不知道你是不是只是很關心朋友的手
+        </div>
+        
+        <!-- 這是吃飯的照片 -->
+        <img class="story-photo" src="i.jpeg" alt="吃飯">
+
+        <div class="story-text">
+            🎬 <strong>後來的電影約會</strong><br>
+            愛你至死不渝真的是嚇鼠 而且今天進度小躍進xd<br>
+            你餵我吃爆米花 後來還牽我的手！<br>
+            <img class="story-photo" src="in.jpeg" alt="電影">
+            我已經不知道該緊張電影還是你牽我讓我心跳加速了<br>
+            而且是我第一次真的跟你講出 有喜歡<br>(雖然也是糾結了很久才說出口)<br>
+            我其實很猶豫耶 但又想讓你知道我是真的有喜歡你<br>
+            雖然我根本不知道你怎麼想<br> 但沒關係 我確定我有喜歡><
+        </div>
+
+        <div class="inner-thought">
+            但看完電影就沒有牽手了 想說你應該只是對朋友很好、會保護女生<br>
+            ( 但不用太會保護其他女生沒關係！保護我就好! )
+        </div>
+
+        <div class="snowman-divider">☃️</div>
+
+        <!-- 四、烘爐地土地公的加持 -->
+        <div class="center-wrap"><div class="date-title">烘爐地 · 確認關係</div></div>
+       
+        <div class="story-text" style="text-align: center; font-size: 1.3rem; margin: 40px 0; color: #2980B9; font-weight: bold;">
+            「你要不要當我女朋友？」
+        </div>
+
+        <div class="inner-thought">
+            這完全不算是告白！！！<br>
+            而且覺得太速 我們甚至只見面幾次而已<br>
+            根本不知道你喜歡我什麼<br>很怕你只是一頭熱<br>
+            也很怕你想得太美好 但實際上的我不是你想的那樣<br>
+            雖然我應該也是乖乖的吧哈哈<br>
+            雖然那根本不能算是告白 那為什麼會答應呢<br> 我太喜歡你了!所以我也想試著跟你走下去看看<br>
+            看我們可以走到哪裡
+        </div>
+
+        <div class="interactive-section">
+            <div class="interactive-title">這到底算不算告白？：</div>
+            <button class="btn" onclick="showMsg('msg-confess', '欸~~確定嗎?? 我這麼好打發??🤨')">算</button>
+            <button class="btn" onclick="showMsg('msg-confess', '你看看 那只能當一半的女朋友xd 😜')">不算</button>
+            <div id="msg-confess" class="popup-msg"></div>
+        </div>
+
+        <div class="snowman-divider">☃️</div>
+
+        <!-- 五、隔天：第二次滑雪 ＆ 結語 -->
+        <div class="center-wrap"><div class="date-title">隔天 · 第二次滑雪</div></div>
+        
+        <div class="story-text">
+            隔天我們去第二次滑雪，沒想到第一次跟第二次之間，身分就不同了 ><
+        </div>
+        
+        <!-- 第二次滑雪的照片 -->
+        <img class="story-photo" src="第二次滑雪照片.jpg" alt="第二次滑雪">
+
+        <div class="inner-thought" style="margin-top: 40px;">
+            在一起之後我們開始每天講電話，幾乎每週見面。
+        </div>
+        
+        <!-- 日常合照 -->
+        <img class="story-photo" src="日常合照.jpg" alt="講電話或常見面">
+
+        <div class="inner-thought">
+            因為我們省略了很多相處跟更認識對方的過程，<br>
+            所以我們一定有很多需要一起調整的地方。
+        </div>
+        
+        <!-- 一起出去玩的照片 -->
+        <img class="story-photo" src="出去玩照片.jpg" alt="出去玩">
+
+        <div class="inner-thought">
+            總之第一個月很幸福的度過🤎<br>
+            應該是會繼續續約到一輩子吧??
+        </div>
+        
+        <!-- 最喜歡的合照 -->
+        <img class="story-photo" src="最喜歡的合照.jpg" alt="最喜歡的合照">
+       
+        <div class="snowman-divider" style="margin-bottom: 100px;">☃️</div>
+    </div>
+
+    <script>
+        function showMsg(elementId, text) {
+            var el = document.getElementById(elementId);
+            el.innerHTML = text;
+            el.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
